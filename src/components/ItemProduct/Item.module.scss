@@ -1,0 +1,52 @@
+.container {
+  height: 9.625rem;
+  width: 100%;
+  max-width: 34.625rem;
+  background-color: var(--white);
+  border-radius: 2.25rem;
+  overflow: hidden;
+  box-shadow: 0 0.125rem 0.75rem rgba(0, 0, 0, 0.1);
+  border: 0;
+
+  display: flex;
+
+  cursor: pointer;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+
+  > img {
+    height: 100%;
+    width: 9.625rem;
+    object-fit: cover;
+  }
+
+  div {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin-left: auto;
+    margin-right: auto;
+    gap: 1.25rem;
+    h1 {
+      color: var(--black-light);
+      font-weight: bold;
+      font-size: 2.25rem;
+    }
+    p {
+      font-family: "Rajdhani";
+      color: var(--black-light);
+      font-weight: 400;
+      font-size: 2.5rem;
+    }
+  }
+}

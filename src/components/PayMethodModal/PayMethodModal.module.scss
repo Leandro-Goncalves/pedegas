@@ -1,0 +1,68 @@
+.overlay {
+  position: fixed;
+  inset: 0px;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.close {
+  line-height: 0;
+  background-color: transparent;
+  border: 0;
+  font-size: 1.875rem;
+  color: var(--gray-medium);
+  filter: brightness(0.8);
+  position: absolute;
+  right: 0.625rem;
+  top: 0.625rem;
+
+  cursor: pointer;
+
+  transition: filter 0.2s;
+
+  &:hover {
+    filter: brightness(0.5);
+  }
+}
+
+.content {
+  position: relative;
+  background: var(--gray-light);
+  padding: 3rem;
+  border-radius: 1.25rem;
+
+  h1 {
+    text-align: center;
+    color: var(--black-light);
+    font-size: 40px;
+  }
+
+  nav {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+
+    button {
+      border: 0;
+      background: transparent;
+      background: var(--green-light);
+      color: var(--black-light);
+      border-radius: 200px;
+      width: 300px;
+      height: 300px;
+
+      cursor: pointer;
+
+      transition: filter 0.2s, border-radius 0.2s;
+
+      &:hover {
+        filter: brightness(0.8);
+        border-radius: 10px;
+      }
+    }
+  }
+}

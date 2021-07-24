@@ -1,0 +1,21 @@
+.container {
+  width: 3.125rem;
+  height: 3.125rem;
+  border-radius: 3.125rem;
+  border: 0;
+  background: var(--green-dark);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: var(--white);
+  font-size: 3rem;
+
+  cursor: pointer;
+
+  transition: background 0.2s;
+
+  &:hover {
+    background: var(--green-light);
+  }
+}

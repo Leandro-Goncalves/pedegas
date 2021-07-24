@@ -1,0 +1,24 @@
+.container {
+  position: relative;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  div {
+    width: 1.875rem;
+    height: 1.875rem;
+    border-radius: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: var(--white);
+    font-weight: bold;
+    font-size: 1.25rem;
+    background: var(--danger);
+
+    position: absolute;
+    right: -5px;
+    top: -5px;
+  }
+}

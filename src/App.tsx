@@ -1,25 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Switch } from 'react-router-dom'
+
+import { UserProvider } from './contexts/UserContext';
+import { CookiesProvider } from 'react-cookie';
+
+import { PrivateRoute } from './routes/PrivateRoute';
+import { PublicRoute } from './routes/PublicRoute';
+import { PrivateRouteStore } from './routes/PrivateRouteStore';
+
+import { Login } from './pages/Login';
+import { Register } from './pages/Register';
+import { Store } from './pages/Store';
+import { StoreSelected } from './pages/StoreSelected';
+
+import { BusinessStore } from './pages/business/BusinessStore';
+import { Item } from './pages/Item';
+import { Cart } from './pages/Cart';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <CookiesProvider>
+        <UserProvider>
+          <Switch>
+            <PublicRoute exact path="/" component={Login}/>
+            <PublicRoute path="/register" component={Register}/>
+            <PrivateRoute path="/store/:id/:productId" component={Item}/>
+            <PrivateRoute path="/store/:id" component={StoreSelected}/>
+            <PrivateRoute path="/store" component={Store}/>
+            <PrivateRoute path="/cart" component={Cart}/>
+            <PrivateRouteStore path="/business/store" component={BusinessStore}/>
+          </Switch>
+        </UserProvider>
+      </CookiesProvider>
+    </BrowserRouter>
   );
 }
 

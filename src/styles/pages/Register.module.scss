@@ -1,0 +1,47 @@
+.container {
+  display: flex;
+  min-height: 100vh;
+  background: var(--green-dark);
+  padding: 0 7.5rem;
+}
+
+.content {
+  flex: 1;
+  background: var(--background);
+  border-radius: 20px;
+  padding: 6.25rem 3rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  position: relative;
+
+  .switch {
+    position: absolute;
+    right: 2rem;
+    top: 2rem;
+  }
+
+  > h1 {
+    font-weight: 800;
+    font-size: 4rem;
+    margin-bottom: 0.875rem;
+  }
+
+  form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 60rem;
+    gap: 1.875rem;
+
+    div {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+}

@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+
+  flex-wrap: wrap;
+  margin-bottom: 12.5rem;
+
+  .header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    color: var(--black-light);
+    margin: 1rem 0;
+  }
+
+  .footer {
+    width: 100%;
+    color: var(--black-light);
+    padding: 30px;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.25);
+    position: fixed;
+    bottom: 0;
+    font-weight: 400;
+    font-size: 1.25rem;
+    background-color: var(--white);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    button {
+      margin-top: 0;
+    }
+
+    span {
+      font-family: "Rajdhani";
+    }
+  }
+}
