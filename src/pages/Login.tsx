@@ -74,7 +74,10 @@ export function Login() {
   return (
     <div className={styles.container}>
       <aside className={styles.lateralItens}>
-        <h1>Full Fuel</h1>
+        <div>
+          <h1>Full Fuel</h1>
+          <h3>abasteça com segurança</h3>
+        </div>
         <img
           src="./img/unnamed2.png"
           alt="mulher entragando compras em uma moto"

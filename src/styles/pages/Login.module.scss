@@ -13,11 +13,21 @@
   max-width: 46rem;
   padding-top: 3.125rem;
 
-  h1 {
-    color: var(--background);
-    font-size: 6rem;
-    font-weight: 500;
-    margin: 0 auto;
+  div {
+    margin-left: 18px;
+    h1 {
+      color: var(--background);
+      font-size: 6rem;
+      font-weight: 500;
+      margin: 0 auto;
+    }
+
+    h3 {
+      color: var(--background);
+      font-size: 3rem;
+      font-weight: 500;
+      margin: 0 auto;
+    }
   }
 
   img {
