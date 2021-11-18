@@ -1,15 +1,6 @@
-import { useState } from 'react';
 import Modal, {Props} from 'react-modal';
 import styles from './PayMethodModal.module.scss';
-import { Button } from '../Button';
-import { Input } from '../Input';
-import { InputNumber } from '../InputNumber';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { database } from '../../services/firebase';
 import { useUsers } from '../../contexts/UserContext';
-import { QuantityInput } from '../QuantityInput';
 import {
   RiBankCardLine,
   RiMoneyDollarBoxLine,
@@ -17,11 +8,13 @@ import {
 } from 'react-icons/ri';
 
 type StoreModalProps = Props & {
-  closeModal: () => void
+  closeModal: () => void,
+  callback: (chosen: "money" | "bankCard") => void
 }
 
 export function PayMethodModal({
   closeModal,
+  callback,
   ...props
 }:StoreModalProps) {
   Modal.setAppElement('#root');
@@ -45,10 +38,10 @@ export function PayMethodModal({
       </button>
       <h1>Selecione o metodo de pagamento</h1>
       <nav>
-        <button>
+        <button onClick={()=>callback("bankCard")}>
           <RiBankCardLine size={200}/>
         </button>
-        <button>
+        <button onClick={()=>callback("money")}>
           <RiMoneyDollarBoxLine size={200}/>
         </button>
      </nav>

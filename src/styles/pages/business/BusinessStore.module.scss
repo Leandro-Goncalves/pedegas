@@ -1,0 +1,30 @@
+.container {
+  padding: 6.25rem 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+  justify-content: center;
+}
+.item {
+  width: 100%;
+  max-width: 43rem;
+  padding: 1.875rem;
+  border-radius: 1.25rem;
+  border: 0;
+
+  cursor: pointer;
+  transition: filter 0.2s;
+
+  &:hover {
+    filter: brightness(0.8);
+  }
+
+  h1 {
+    color: var(--white);
+    font-size: 3.125rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.25rem;
+  }
+}

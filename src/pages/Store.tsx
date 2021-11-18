@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react"
 import { Header } from "../components/Header"
 import { Item } from "../components/Item";
@@ -32,6 +33,17 @@ type UserPropsPlusStoreId = {
   storeId: string;
 }
 
+const fadeUp = {
+  initial: {
+    opacity: 0,
+    y: 100
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+  }
+}
+
 export function Store() {
 
   const {
@@ -57,13 +69,24 @@ export function Store() {
   }, [])
 
   return(
-    <div>
-      <Header userName={user.name}/>
-      <div className={styles.container}>
+    <motion.div>
+      <Header userName={user?.name}/>
+      <motion.div
+        className={styles.container}
+        animate={{
+          transition: {
+            staggerChildren: 0.5
+          }
+        }}
+      >
         {Stores.map(store => (<>
-        <Item {...store} sendto={"/store/:id/"}/>
+        <Item
+          {...store}
+          sendto={"/store/:id/"}
+          variants={fadeUp}
+        />
         </>))}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   )
 }

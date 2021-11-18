@@ -1,9 +1,9 @@
-import { ButtonHTMLAttributes } from "react"
 import styles from './styles.module.scss';
 import ClipLoader from "react-spinners/ClipLoader";
+import { HTMLMotionProps, motion, Variants } from "framer-motion";
 
 
-type ButtonPros = ButtonHTMLAttributes<HTMLButtonElement> & {
+type ButtonPros = HTMLMotionProps<"button"> & {
   text: string,
   small?: boolean
   isLoading?: boolean,
@@ -20,8 +20,17 @@ export function Button({
   ...rest
 }:ButtonPros) {
   return (
-    <button className={small ? styles.smallButton : styles.button} {...rest}>
+    <motion.button
+      whileHover={{
+        scale: 1.1
+      }}
+      whileTap={{
+        scale: 0.9
+      }}
+      className={small ? styles.smallButton : styles.button}
+      {...rest}
+    >
       {isLoading ? <ClipLoader color={loadingColor} loading size={loadingSize} /> : text}
-    </button>
+    </motion.button>
   )
 }

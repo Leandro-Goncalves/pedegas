@@ -4,6 +4,7 @@ import { GiKnifeFork } from 'react-icons/gi';
 import { useHistory } from 'react-router-dom';
 
 import styles from './Item.module.scss';
+import { motion, Variants } from 'framer-motion';
 
 type ItemProps = {
   name: string;
@@ -16,7 +17,8 @@ type ItemProps = {
   haveGasStop: boolean;
   haveFoods: boolean;
   storeId: string;
-  sendto?: string
+  sendto?: string;
+  variants?: Variants;
 }
 
 
@@ -27,7 +29,8 @@ export function Item({
   haveGasStop,
   haveTelephone,
   storeId,
-  sendto
+  sendto,
+  variants
 }:ItemProps) {
 
   const history = useHistory()
@@ -41,7 +44,11 @@ export function Item({
   }
 
   return(
-    <div className={styles.container} onClick={handleClick}>
+    <motion.div
+      className={styles.container}
+      onClick={handleClick}
+      variants={variants}
+    >
       <img src={image} alt={name} />
       <div>
         <h1>Posto {name}</h1>
@@ -62,6 +69,6 @@ export function Item({
           />
         </nav>
       </div>
-    </div>
+    </motion.div>
   )
 }

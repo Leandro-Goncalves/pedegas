@@ -1,9 +1,8 @@
-import { useHistory } from 'react-router-dom';
 import { RiCloseCircleLine } from 'react-icons/ri'
-
-import styles from './CartItem.module.scss';
 import { database } from '../../services/firebase';
 import { useUsers } from '../../contexts/UserContext';
+
+import styles from './CartItem.module.scss';
 
 type ItemProps = {
   name: string;
@@ -20,8 +19,6 @@ export function CartItem({
   productId,
 }:ItemProps) {
 
-  const history = useHistory()
-
   const {
     userUid
   } = useUsers()
@@ -34,10 +31,12 @@ export function CartItem({
   return(
     <div className={styles.container}>
       <button onClick={removeItem}><RiCloseCircleLine/></button>
-      <h1>{name}</h1>
-      <div>
-        <p>R$: {value.toLocaleString('pt-br', {minimumFractionDigits: 2})}</p>
-        <span>{quantity}X</span>
+      <div className={styles.content}>
+        <h1>{name}</h1>
+        <div>
+          <p>R$: {value.toLocaleString('pt-br', {minimumFractionDigits: 2})}</p>
+          <span>{quantity}X</span>
+        </div>
       </div>
     </div>
   )

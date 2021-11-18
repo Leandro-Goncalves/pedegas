@@ -1,3 +1,4 @@
+import { RiCloseCircleLine } from 'react-icons/ri';
 import { useHistory } from 'react-router-dom';
 
 import styles from './Item.module.scss';
@@ -7,7 +8,10 @@ type ItemProps = {
   value: number;
   image: string;
   productId: string;
+  quantity: number;
   sendto?: string;
+  noAnimation?: boolean;
+  removeCallback?: (productId:string) => void;
 }
 
 
@@ -16,7 +20,9 @@ export function ItemProduct({
   image,
   value,
   productId,
-  sendto
+  sendto,
+  noAnimation,
+  removeCallback
 }:ItemProps) {
 
   const history = useHistory()
@@ -30,7 +36,13 @@ export function ItemProduct({
   }
 
   return(
-    <div className={styles.container} onClick={handleClick}>
+    <div
+      className={`${styles.container} ${noAnimation && styles.noAnimation}`}
+      onClick={handleClick}
+    >
+      {removeCallback &&
+        <button onClick={()=>removeCallback(productId)}><RiCloseCircleLine/></button>
+      }
       <img src={image} alt={name} />
       <div>
         <h1>{name}</h1>

@@ -16,7 +16,7 @@ type Iten = {
   name: string;
   value: number;
   image: string;
-  quantity: string;
+  quantity: number;
   productId: string;
 }
 
@@ -50,8 +50,10 @@ export function StoreSelected() {
       const storeData = await database.ref('stores').child(id).get()
       setStoreData(storeData.val())
       const itens = [] as Iten[];
+
       
-      Object.entries(storeData.val().itens).forEach(([key, value]) => {
+      
+      Object.entries(storeData.val().itens || []).forEach(([key, value]) => {
         const typeValue = value as Iten;
         itens.push({...typeValue, productId:key})
       });
@@ -65,7 +67,7 @@ export function StoreSelected() {
   return(
     <div>
       <Header userName={user.name}/>
-      <StoreCard name="Sei lá" image={storeData.image}/>
+      <StoreCard name={storeData.name} image={storeData.image}/>
       <div className={styles.container}>
         {itensData.map(iten => <ItemProduct {...iten} sendto={":id"}/>)}
       </div>

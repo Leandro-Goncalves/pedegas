@@ -6,12 +6,15 @@ import { Button } from '../components/Button';
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useHistory } from 'react-router-dom';
 import Switch from 'react-switch';
+import cep, {CEP} from 'cep-promise'
 
 import { RiUserLine, RiStoreLine } from 'react-icons/ri'
 
 import styles from '../styles/pages/Register.module.scss';
 import { useUsers } from '../contexts/UserContext';
 import { StoreModal } from '../components/StoreModal';
+import { toast } from 'react-toastify';
+import { motion } from 'framer-motion';
 
 type RegisterFormData = {
   name: string;
@@ -42,6 +45,25 @@ type UserData = {
   number: number
 }
 
+const fadeUp = {
+  initial: {
+    opacity: 0,
+    y: 100
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+  }
+}
+
+const stagger = {
+  animate: {
+    transition: {
+      staggerChildren: .12
+    }
+  }
+}
+
 let RegisterSchema = yup.object().shape({
   name: yup.string().required("O Nome não pode estar em branco"),
   email: yup.string().required("O Email não pode estar em branco").email("Email invalido"),
@@ -60,7 +82,7 @@ export function Register() {
   const [savedUserData, setSavedUserData] = useState<UserData>({} as UserData);
   
 
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
+  const { register, setError, handleSubmit, formState: { errors, isSubmitting } } = useForm({
     resolver: yupResolver(RegisterSchema)
   });
 
@@ -70,12 +92,24 @@ export function Register() {
   } = useUsers()
 
   const handlerRegister: SubmitHandler<RegisterFormData> = async (value) => {
-    if(switchValue){
-      setModal(true)
-      setSavedUserData(value)
-      return;
+    try{
+      await cep(value.cep)
+      if(switchValue){
+        setModal(true)
+        setSavedUserData(value)
+        return;
+      }
+    } catch (err) {
+      setError("cep", {message:"Cep nao encontrado!"})
+      return
     }
-    await UserRegister(value)
+
+    try{
+      await UserRegister(value)
+    } catch(err) {
+      toast.error(err.message)
+    }
+    
   }
 
   const handlerStoreRegister= async (userData: UserStoreData) => {
@@ -89,7 +123,11 @@ export function Register() {
 
   return(
     <div className={styles.container}>
-      <div className={styles.content}>
+      <motion.div
+        className={styles.content}
+        initial="initial"
+        animate="animate"
+      >
         <h1>Cadastrar</h1>
         <div className={styles.switch}>
         <Switch
@@ -118,42 +156,51 @@ export function Register() {
           }
         />
         </div>
-        <form onSubmit={handleSubmit(handlerRegister)}>
+        <motion.form
+          onSubmit={handleSubmit(handlerRegister)}
+          variants={stagger}
+        >
           <Input
             label="Nome"
             type="text"
             {...register("name")}
             error={errors.name}
+            animation={fadeUp}
           />
           <Input
             label="Email"
             type="text"
             {...register("email")}
             error={errors.email}
+            animation={fadeUp}
           />
           <Input
             label="Senha"
             type="password"
             {...register("password")}
             error={errors.password}
+            animation={fadeUp}
           />
           <Input
             label="Confirmar senha"
             type="password"
             {...register("confirmPassword")}
             error={errors.confirmPassword}
+            animation={fadeUp}
           />
           <Input
             label="Cep"
             type="number"
             {...register("cep")}
             error={errors.cep}
+            animation={fadeUp}
           />
           <Input
             label="Numero"
             type="number"
             {...register("number")}
             error={errors.number}
+            animation={fadeUp}
           />
           <div>
             <Button
@@ -162,11 +209,18 @@ export function Register() {
               isLoading={isSubmitting}
               disabled={isSubmitting}
               loadingColor="white"
+              variants={fadeUp}
             />
-            <Button small type="button" text="Logar" onClick={handleLogin}/>
+            <Button
+              small
+              type="button"
+              text="Logar"
+              onClick={handleLogin}
+              variants={fadeUp}
+            />
           </div>
-        </form>
-      </div>
+        </motion.form>
+      </motion.div>
       <StoreModal
         isOpen={modal}
         closeModal={()=>setModal(false)}

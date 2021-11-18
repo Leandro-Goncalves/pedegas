@@ -10,12 +10,14 @@ import { database } from '../../services/firebase';
 type HeaderProps = {
   userName: string;
   isStore?: boolean;
+  isRightItem?: boolean;
   StoreCallback?: () => void;
 }
 
 export function Header({
   userName,
   isStore = false,
+  isRightItem = true,
   StoreCallback = () => {},
 }:HeaderProps) {
 
@@ -31,12 +33,14 @@ export function Header({
       return
     }
     
-    database.ref("users").child(userUid).child("cart").on("value", (cart) => {
+    database.ref("users").child(userUid).child("cart").on("value", (stores) => {
       let CartItensState = 0
 
-      cart.forEach(item => {
-        const quantity = item.val().quantity as string
-        CartItensState += Number(quantity)
+      stores.forEach(items => {
+        items.forEach(item => {
+          const quantity = item.val().quantity as string
+          CartItensState += Number(quantity)
+        })  
       });
 
       setCartItens(CartItensState)
@@ -46,8 +50,11 @@ export function Header({
   return(
     <div className={styled.container}>
       <h1><RiLogoutBoxRLine onClick={logout}/>{userName && `Ola ${userName}`}</h1>
-      {!isStore && <Cart itens={cartItens}/>}
-      {isStore && <AddItemButton callback={StoreCallback}/>}
+      {isRightItem && (
+          !isStore ? <Cart itens={cartItens}/>
+          : <AddItemButton callback={StoreCallback}/>
+        )
+      }
       
     </div>
   )

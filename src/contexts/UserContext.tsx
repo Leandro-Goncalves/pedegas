@@ -105,7 +105,14 @@ export function UserProvider({
         setUserUid('@pedegas_uid', uid, { path: '/' });
       }
     } catch(err) {
-      
+      switch(err.code){
+        case 'auth/wrong-password':
+          throw new Error("Email ou senha incorretos!")
+        case 'auth/user-not-found':
+          throw new Error("Email ou senha incorretos!")
+        default:
+          throw new Error(err.message)
+      }
     }
   }
 
@@ -125,7 +132,14 @@ export function UserProvider({
         setIsStore('@pedegas_isStore', false, { path: '/' });
       }
     } catch(err) {
-      console.log(err)
+      switch(err.code){
+        case 'auth/weak-password':
+          throw new Error("A senha precisa ter mais de 6 caracteres")
+        case 'auth/email-already-in-use':
+          throw new Error("O email já esta em uso")
+        default:
+          throw new Error(err.message)
+      }
     }
   }
 
@@ -145,8 +159,8 @@ export function UserProvider({
 
   async function logout() {
     await firebase.auth().signOut()
-    removeUserUid('@pedegas_uid')
-    removeIsStore('@pedegas_isStore')
+    removeUserUid('@pedegas_uid', {path: '/'})
+    removeIsStore('@pedegas_isStore', {path: '/'})
     history.push("/")
   }
 

@@ -12,18 +12,6 @@ import { useUsers } from '../../contexts/UserContext';
 import { QuantityInput } from '../QuantityInput';
 import { RiCloseLine } from 'react-icons/ri';
 
-type UserStoreData = {
-  name: string;
-  email: string;
-  password: string;
-  cep: number;
-  number: number;
-  image: string;
-  haveTelephone: boolean;
-  haveGasStop: boolean;
-  haveFoods: boolean;
-}
-
 type StoreModalProps = Props & {
   closeModal: () => void
 }

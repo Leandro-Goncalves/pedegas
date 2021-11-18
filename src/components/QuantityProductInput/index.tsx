@@ -44,8 +44,8 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps>
           ref={ref}
           value={value}
           onChange={(e)=>{
-            const { value } = e.target
-            setValue(Number(value))
+            const value = Number(e.target.value)
+            setValue(value >= maxQuantity ? maxQuantity : value)
           }}
         />
         <button

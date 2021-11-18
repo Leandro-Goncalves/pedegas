@@ -66,10 +66,10 @@ export function Item() {
     setIsLoading(true);
 
     const itemExistInCart = await database.ref("users")
-    .child(userUid).child("cart").child(itemData.itemId).get();
+    .child(userUid).child("cart").child(id).child(itemData.itemId).get();
 
     
-    await database.ref("users").child(userUid).child("cart").child(itemData.itemId).set({
+    await database.ref("users").child(userUid).child("cart").child(id).child(itemData.itemId).set({
       name:itemData.name,
       value: itemData.value,
       quantity: itemExistInCart.val()

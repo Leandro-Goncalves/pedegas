@@ -3,6 +3,8 @@
   min-height: 100vh;
   background: var(--green-dark);
   padding: 0 7.5rem;
+  display: flex;
+  justify-content: center;
 }
 
 .content {
@@ -10,6 +12,7 @@
   background: var(--background);
   border-radius: 20px;
   padding: 6.25rem 3rem;
+  max-width: 70rem;
 
   display: flex;
   justify-content: center;

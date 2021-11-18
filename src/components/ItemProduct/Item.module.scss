@@ -12,6 +12,20 @@
 
   cursor: pointer;
   transition: transform 0.2s;
+  position: relative;
+
+  button {
+    border: 0;
+    background-color: transparent;
+    line-height: 0;
+    color: var(--danger);
+    position: absolute;
+    right: 0.625rem;
+    top: 0.625rem;
+    font-size: 25px;
+
+    cursor: pointer;
+  }
 
   &:hover {
     transform: scale(1.1);
@@ -48,5 +62,16 @@
       font-weight: 400;
       font-size: 2.5rem;
     }
+  }
+}
+
+.noAnimation {
+  cursor: auto;
+  &:hover {
+    transform: scale(1);
+  }
+
+  &:active {
+    transform: scale(1);
   }
 }

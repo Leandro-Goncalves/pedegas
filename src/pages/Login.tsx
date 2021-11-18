@@ -1,6 +1,7 @@
 import styles from '../styles/pages/Login.module.scss';
 import onTheWayImg from '../assets/onTheWay.svg';
 import { useHistory } from 'react-router-dom';
+import { motion } from "framer-motion"
 
 import { Input } from '../components/Input';
 import { Button } from '../components/Button';
@@ -9,11 +10,31 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useUsers } from '../contexts/UserContext';
+import { toast } from 'react-toastify';
 
 type LoginFormData = {
   email: string;
   password: string;
-}  
+}
+
+const fadeUp = {
+  initial: {
+    opacity: 0,
+    y: 100
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+  }
+}
+
+const stagger = {
+  animate: {
+    transition: {
+      staggerChildren: .12
+    }
+  }
+}
 
 let LoginSchema = yup.object().shape({
   email: yup.string().required("O Email não pode estar em branco").email("Email invalido"),
@@ -33,7 +54,12 @@ export function Login() {
   } = useUsers()
 
   const handlerLogin: SubmitHandler<LoginFormData> = async (value) => {
-    await login(value)
+    try {
+      await login(value)
+    } catch(err) {
+      toast.error(err.message)
+    }
+    
     reset()
   }
 
@@ -47,20 +73,31 @@ export function Login() {
         <h1>pedegás</h1>
         <img src={onTheWayImg} alt="mulher entragando compras em uma moto" />
       </aside>
-      <div className={styles.content}>
-        <h1>Login</h1>
-        <form onSubmit={handleSubmit(handlerLogin)}>
+      <motion.div
+        className={styles.content}
+        initial="initial"
+        animate="animate"
+      >
+        <motion.h1
+          initial={{opacity:0}}
+          animate={{ opacity:1 }}
+        >Login</motion.h1>
+        <motion.form onSubmit={handleSubmit(handlerLogin)}
+          variants={stagger}
+        >
           <Input
             label="Email"
             type="text"
             {...register("email")}
             error={errors.email}
+            animation={fadeUp}
           />
           <Input
             label="Senha"
             type="password"
             {...register("password")}
             error={errors.password}
+            animation={fadeUp}
           />
           <Button
             type="submit"
@@ -68,10 +105,17 @@ export function Login() {
             isLoading={isSubmitting}
             disabled={isSubmitting}
             loadingColor="white"
+            variants={fadeUp}
           />
-          <Button small type="button" text="Cadastrar" onClick={handlerRegister}/>
-        </form>
-      </div>
+          <Button
+            small
+            type="button"
+            text="Cadastrar"
+            onClick={handlerRegister}
+            variants={fadeUp}
+          />
+        </motion.form>
+      </motion.div>
     </div>
   )
 }
