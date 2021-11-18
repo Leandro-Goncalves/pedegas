@@ -1,17 +1,17 @@
-import { motion } from 'framer-motion';
-import React from 'react';
-import { Route, Redirect, RouteProps } from 'react-router-dom';
-import { useUsers } from '../contexts/UserContext';
+import React from "react";
+import { Route, Redirect, RouteProps } from "react-router-dom";
+import { useUsers } from "../contexts/UserContext";
 
-type PrivateRouteProps = RouteProps
+type PrivateRouteProps = RouteProps;
 
-export const PrivateRoute = ({...rest}:PrivateRouteProps) => {
-  const {
-    userUid,
-    isStore
-  } = useUsers()
-    if(userUid){
-      return (isStore ? <Redirect to={{ pathname: "/business/store" }} />:<Route {...rest}/>)
-    }
-    return (<Redirect to={{ pathname: "/" }} />);
+export const PrivateRoute = ({ ...rest }: PrivateRouteProps) => {
+  const { userUid, isStore } = useUsers();
+  if (userUid) {
+    return isStore ? (
+      <Redirect to={{ pathname: "/business/store" }} />
+    ) : (
+      <Route {...rest} />
+    );
+  }
+  return <Redirect to={{ pathname: "/" }} />;
 };

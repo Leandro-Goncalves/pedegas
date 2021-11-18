@@ -1,90 +1,94 @@
-import styles from '../styles/pages/Login.module.scss';
-import onTheWayImg from '../assets/onTheWay.svg';
-import { useHistory } from 'react-router-dom';
-import { motion } from "framer-motion"
+import styles from "../styles/pages/Login.module.scss";
+import { useHistory } from "react-router-dom";
+import { motion } from "framer-motion";
 
-import { Input } from '../components/Input';
-import { Button } from '../components/Button';
+import { Input } from "../components/Input";
+import { Button } from "../components/Button";
 
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useUsers } from '../contexts/UserContext';
-import { toast } from 'react-toastify';
+import { useUsers } from "../contexts/UserContext";
+import { toast } from "react-toastify";
 
 type LoginFormData = {
   email: string;
   password: string;
-}
+};
 
 const fadeUp = {
   initial: {
     opacity: 0,
-    y: 100
+    y: 100,
   },
   animate: {
     opacity: 1,
     y: 0,
-  }
-}
+  },
+};
 
 const stagger = {
   animate: {
     transition: {
-      staggerChildren: .12
-    }
-  }
-}
+      staggerChildren: 0.12,
+    },
+  },
+};
 
 let LoginSchema = yup.object().shape({
-  email: yup.string().required("O Email não pode estar em branco").email("Email invalido"),
+  email: yup
+    .string()
+    .required("O Email não pode estar em branco")
+    .email("Email invalido"),
   password: yup.string().required("A senha não pode estar em branco"),
 });
 
 export function Login() {
-
   const history = useHistory();
 
-  const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm({
-    resolver: yupResolver(LoginSchema)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm({
+    resolver: yupResolver(LoginSchema),
   });
 
-  const {
-    login,
-  } = useUsers()
+  const { login } = useUsers();
 
   const handlerLogin: SubmitHandler<LoginFormData> = async (value) => {
     try {
-      await login(value)
-    } catch(err) {
-      toast.error(err.message)
+      await login(value);
+    } catch (err) {
+      toast.error(err.message);
     }
-    
-    reset()
-  }
+
+    reset();
+  };
 
   function handlerRegister() {
-    history.push("/register")
+    history.push("/register");
   }
 
-  return(
+  return (
     <div className={styles.container}>
       <aside className={styles.lateralItens}>
-        <h1>pedegás</h1>
-        <img src={onTheWayImg} alt="mulher entragando compras em uma moto" />
+        <h1>Full Fuel</h1>
+        <img
+          src="./img/unnamed2.png"
+          alt="mulher entragando compras em uma moto"
+        />
       </aside>
       <motion.div
         className={styles.content}
         initial="initial"
         animate="animate"
       >
-        <motion.h1
-          initial={{opacity:0}}
-          animate={{ opacity:1 }}
-        >Login</motion.h1>
-        <motion.form onSubmit={handleSubmit(handlerLogin)}
-          variants={stagger}
-        >
+        <motion.h1 initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          Login
+        </motion.h1>
+        <motion.form onSubmit={handleSubmit(handlerLogin)} variants={stagger}>
           <Input
             label="Email"
             type="text"
@@ -117,5 +121,5 @@ export function Login() {
         </motion.form>
       </motion.div>
     </div>
-  )
+  );
 }

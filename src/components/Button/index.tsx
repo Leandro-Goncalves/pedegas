@@ -1,15 +1,14 @@
-import styles from './styles.module.scss';
+import styles from "./styles.module.scss";
 import ClipLoader from "react-spinners/ClipLoader";
-import { HTMLMotionProps, motion, Variants } from "framer-motion";
-
+import { HTMLMotionProps, motion } from "framer-motion";
 
 type ButtonPros = HTMLMotionProps<"button"> & {
-  text: string,
-  small?: boolean
-  isLoading?: boolean,
-  loadingColor?: string,
-  loadingSize?: number
-}
+  text: string;
+  small?: boolean;
+  isLoading?: boolean;
+  loadingColor?: string;
+  loadingSize?: number;
+};
 
 export function Button({
   small,
@@ -18,19 +17,23 @@ export function Button({
   loadingColor = "black",
   loadingSize = 25,
   ...rest
-}:ButtonPros) {
+}: ButtonPros) {
   return (
     <motion.button
       whileHover={{
-        scale: 1.1
+        scale: 1.1,
       }}
       whileTap={{
-        scale: 0.9
+        scale: 0.9,
       }}
       className={small ? styles.smallButton : styles.button}
       {...rest}
     >
-      {isLoading ? <ClipLoader color={loadingColor} loading size={loadingSize} /> : text}
+      {isLoading ? (
+        <ClipLoader color={loadingColor} loading size={loadingSize} />
+      ) : (
+        text
+      )}
     </motion.button>
-  )
+  );
 }
